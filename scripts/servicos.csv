@@ -1,0 +1,21 @@
+﻿cliente,projeto,tipo_servico,fornecedor,custo,preco_venda,data_inicio,data_expiracao
+Kiala Comércio,Website institucional,dominio,AngoHost,8500,15000,2025-11-12,2026-11-10
+Nova Era Consultoria,Portal empresarial,hosting,WebHS,18000,30000,2026-05-12,2026-11-15
+Mundo Digital,Loja online,SSL,Let's Encrypt,0,8000,2026-11-12,2026-11-19
+Alfa Construções,Website institucional,manutencao,Equipa interna,12000,25000,2026-01-12,2026-11-25
+Beta Transportes,Portal de reservas,licenca,SoftAngola,22000,35000,2026-02-12,2026-12-12
+Kwanza Saúde,Portal de clínica,dominio,AngoHost,7000,14000,2025-12-12,2027-01-11
+Ponto Certo,Website institucional,hosting,WebHS,15000,26000,2026-06-12,2027-02-10
+Luz & Linha,Loja online,SSL,CertAngola,5000,10000,2026-11-12,2027-03-12
+MediMais,Portal de clínica,manutencao,Equipa interna,10000,22000,2026-03-12,2026-11-12
+Educa Futuro,Portal académico,hosting,AngoHost,16000,28000,2026-04-12,2026-11-18
+Casa Verde,Website institucional,dominio,WebHS,6500,13000,2025-10-12,2026-12-02
+TransKota,Sistema de gestão,licenca,SoftAngola,25000,42000,2026-01-12,2026-12-05
+Mwangolé Eventos,Website de eventos,manutencao,Equipa interna,9000,19000,2026-05-12,2026-12-20
+TechNova,Portal de suporte,SSL,CertAngola,4000,9000,2026-11-12,2027-01-05
+Bom Preço,Loja online,hosting,AngoHost,20000,34000,2026-02-12,2026-11-20
+Clínica Horizonte,Portal de clínica,dominio,WebHS,7500,16000,2026-07-12,2027-01-10
+Rota Segura,Portal de reservas,manutencao,Equipa interna,11000,24000,2026-06-12,2026-11-30
+Livraria Central,Loja online,licenca,SoftAngola,19000,32000,2026-08-12,2027-01-11
+Saber Mais,Portal académico,hosting,AngoHost,14000,27000,2026-09-12,2027-01-12
+Agro Luanda,Website institucional,dominio,CertAngola,6000,12500,2026-10-12,2027-03-12
