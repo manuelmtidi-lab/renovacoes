@@ -2,56 +2,55 @@ import csv
 from datetime import datetime, date
 
 
+def classificar(dias):
+    """Devolve o estado do serviço conforme os dias que faltam."""
+    if dias < 0:
+        return 'atrasado'
+    elif dias <= 7:
+        return '7 dias'
+    elif dias <= 30:
+        return '30 dias'
+    elif dias <= 60:
+        return '60 dias'
+    return 'ok'
+
+
+hoje = date.today()
+receita_total = 0
+receitas_por_tipo = {}
+margens_por_tipo = {}
+
 with open('servicos.csv', 'r', encoding='utf-8-sig') as csvfile:
     reader = csv.DictReader(csvfile)
-    receita = 0
-    hoje = date.today()
-    receitas_por_tipo = {
-        'dominio': 0,
-        'hosting': 0,
-        'SSL': 0,
-        'manutencao': 0,
-        'licenca': 0,
-    }
 
     for linha in reader:
-        preco = int(linha["preco_venda"])
-        custo = int(linha["custo"])
+        tipo = linha['tipo_servico'].strip().lower()
+        preco = float(linha['preco_venda'])
+        custo = float(linha['custo'])
         data_expiracao = datetime.strptime(
-            linha["data_expiracao"], '%Y-%m-%d'
+            linha['data_expiracao'], '%Y-%m-%d'
         ).date()
 
-        qd = (data_expiracao - hoje).days
+        dias = (data_expiracao - hoje).days
         margem = preco - custo
+        estado = classificar(dias)
+
         print(f'cliente: {linha["cliente"]}')
-        print(f'tipo de serviço: {linha["tipo_servico"]}')
-        print(f'preço: {preco}')
-        print(f'margem: {margem}')
-        print(f'Dias restantes: {qd}')
-        if qd < 0:
-            estado = 'estado serviço está atrasado.'
-        elif qd <= 7:
-            estado = 'estado: Alerta falta 7 dias'
+        print(f'tipo de serviço: {tipo}')
+        print(f'preço: {preco:.2f}')
+        print(f'margem: {margem:.2f}')
+        print(f'dias restantes: {dias}')
+        print(f'estado: {estado}')
+        print('_' * 30)
 
-        elif qd <= 30:
-            estado = 'estado: falta 30 dias'
-        elif qd <= 60:
-            estado = 'estado: falta 60 dias'
-        else:
-            estado = 'ok'
-        print(f'Estado: {estado}')
-        print('_'*30)
-        receita += preco
-        if linha['tipo_servico'] == 'dominio':
-            receitas_por_tipo['dominio'] += preco
-        elif linha['tipo_servico'] == 'hosting':
-            receitas_por_tipo['hosting'] += preco
-        elif linha['tipo_servico'] == 'SSL':
-            receitas_por_tipo['SSL'] += preco
-        elif linha['tipo_servico'] == 'manutencao':
-            receitas_por_tipo['manutencao'] += preco
-        elif linha['tipo_servico'] == 'licenca':
-            receitas_por_tipo['licenca'] += preco
+        receita_total += preco
+        receitas_por_tipo[tipo] = receitas_por_tipo.get(tipo, 0) + preco
+        margens_por_tipo[tipo] = margens_por_tipo.get(tipo, 0) + margem
 
-    print(f'receita: {receita}')
-    print(f'receitas_por_tipo: {receitas_por_tipo}')
+print(f'receita total: {receita_total:.2f}')
+print('receita por tipo:')
+for tipo, valor in receitas_por_tipo.items():
+    print(f'  {tipo}: {valor:.2f}')
+print('margem por tipo:')
+for tipo, valor in margens_por_tipo.items():
+    print(f'  {tipo}: {valor:.2f}')
