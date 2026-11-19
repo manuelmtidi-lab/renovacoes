@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{% load perfis %}<!DOCTYPE html>
 <html lang="pt">
 <head>
   <meta charset="utf-8">
@@ -7,10 +7,23 @@
 </head>
 <body>
   <nav>
-    <a href="{% url 'servicos:servico_lista' %}">Serviços</a> |
-    <a href="{% url 'servicos:projecto_lista' %}">Projectos</a> |
-    <a href="{% url 'servicos:cliente_lista' %}">Clientes</a> |
-    <a href="{% url 'admin:index' %}">Admin</a>
+    {% if user.is_authenticated %}
+      <a href="{% url 'servicos:servico_lista' %}">Serviços</a> |
+      <a href="{% url 'servicos:projecto_lista' %}">Projectos</a> |
+      {% if user|pode_gerir %}
+        <a href="{% url 'servicos:cliente_lista' %}">Clientes</a> |
+      {% endif %}
+      {% if user.is_staff %}
+        <a href="{% url 'admin:index' %}">Admin</a> |
+      {% endif %}
+      <span>{{ user.get_username }}</span>
+      <form method="post" action="{% url 'logout' %}" style="display:inline">
+        {% csrf_token %}
+        <button type="submit">Sair</button>
+      </form>
+    {% else %}
+      <a href="{% url 'login' %}">Entrar</a>
+    {% endif %}
   </nav>
   <hr>
   {% if messages %}

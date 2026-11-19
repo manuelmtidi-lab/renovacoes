@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
+{% load perfis %}
 {% block conteudo %}
 <h1>Serviços</h1>
-<a href="{% url 'servicos:servico_criar' %}">Novo serviço</a>
+{% if user|pode_gerir %}<a href="{% url 'servicos:servico_criar' %}">Novo serviço</a>{% endif %}
 <table border="1" cellpadding="4">
   <tr>
     <th>Cliente</th><th>Projecto</th><th>Tipo</th><th>Expira em</th>
-    <th>Dias</th><th>Estado</th><th>Margem</th><th></th>
+    <th>Dias</th><th>Estado</th>{% if user|pode_gerir %}<th>Margem</th>{% endif %}<th></th>
   </tr>
   {% for s in servicos %}
   <tr>
@@ -15,10 +16,15 @@
     <td>{{ s.expira_em|date:"d/m/Y" }}</td>
     <td>{{ s.dias_para_expirar }}</td>
     <td>{{ s.estado_alerta }}</td>
-    <td>{{ s.margem }}</td>
+    {% if user|pode_gerir %}<td>{{ s.margem }}</td>{% endif %}
     <td>
-      <a href="{% url 'servicos:servico_editar' s.pk %}">Editar</a>
-      <a href="{% url 'servicos:servico_apagar' s.pk %}">Apagar</a>
+      {% if user|pode_gerir %}
+        <a href="{% url 'servicos:servico_renovar' s.pk %}">Renovar</a>
+        <a href="{% url 'servicos:servico_editar' s.pk %}">Editar</a>
+      {% endif %}
+      {% if user|pode_apagar %}
+        <a href="{% url 'servicos:servico_apagar' s.pk %}">Apagar</a>
+      {% endif %}
     </td>
   </tr>
   {% empty %}

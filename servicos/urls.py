@@ -10,6 +10,7 @@ urlpatterns = [
     path('servicos/<int:pk>/', views.ServicoDetailView.as_view(), name='servico_detalhe'),
     path('servicos/<int:pk>/editar/', views.ServicoUpdateView.as_view(), name='servico_editar'),
     path('servicos/<int:pk>/apagar/', views.ServicoDeleteView.as_view(), name='servico_apagar'),
+    path('servicos/<int:pk>/renovar/', views.RenovarServicoView.as_view(), name='servico_renovar'),
 
     path('clientes/', views.ClienteListView.as_view(), name='cliente_lista'),
     path('clientes/novo/', views.ClienteCreateView.as_view(), name='cliente_criar'),

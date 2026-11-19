@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+<h1>Registar renovação</h1>
+<p>
+  {{ servico.get_tipo_display }} de {{ servico.projecto.cliente.nome }}
+  ({{ servico.projecto.nome }}), expira em {{ servico.expira_em|date:"d/m/Y" }}.
+</p>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Registar renovação</button>
+  <a href="{% url 'servicos:servico_detalhe' servico.pk %}">Cancelar</a>
+</form>
+{% endblock %}

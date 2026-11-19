@@ -1,16 +1,27 @@
 {% extends 'base.html' %}
+{% load perfis %}
 {% block conteudo %}
 <h1>{{ servico.get_tipo_display }}: {{ servico.projecto.nome }}</h1>
 <p>Cliente: {{ servico.projecto.cliente.nome }}</p>
 <p>Fornecedor: {{ servico.fornecedor|default:"-" }}</p>
-<p>Custo: {{ servico.custo }} | Preço: {{ servico.preco_venda }} | Margem: {{ servico.margem }}</p>
+{% if user|pode_gerir %}
+  <p>Custo: {{ servico.custo }} | Preço: {{ servico.preco_venda }} | Margem: {{ servico.margem }}</p>
+{% endif %}
 <p>Início: {{ servico.inicio|date:"d/m/Y" }} | Expira em: {{ servico.expira_em|date:"d/m/Y" }}</p>
 <p>Dias restantes: {{ servico.dias_para_expirar }} ({{ servico.estado_alerta }})</p>
+
+{% if user|pode_gerir %}
+  <p><a href="{% url 'servicos:servico_renovar' servico.pk %}">Registar renovação</a></p>
+{% endif %}
 
 <h2>Histórico de renovações</h2>
 <ul>
   {% for r in servico.renovacoes.all %}
-    <li>{{ r.data|date:"d/m/Y" }}: {{ r.valor }} (nova expiração {{ r.nova_expiracao|date:"d/m/Y" }})</li>
+    <li>
+      {{ r.data|date:"d/m/Y" }}: {{ r.valor }}
+      (nova expiração {{ r.nova_expiracao|date:"d/m/Y" }})
+      {% if r.utilizador %}por {{ r.utilizador.get_username }}{% endif %}
+    </li>
   {% empty %}
     <li>Ainda sem renovações.</li>
   {% endfor %}

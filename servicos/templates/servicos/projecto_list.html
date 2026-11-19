@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
+{% load perfis %}
 {% block conteudo %}
 <h1>Projectos</h1>
-<a href="{% url 'servicos:projecto_criar' %}">Novo projecto</a>
+{% if user|pode_gerir %}<a href="{% url 'servicos:projecto_criar' %}">Novo projecto</a>{% endif %}
 <table border="1" cellpadding="4">
   <tr><th>Projecto</th><th>Cliente</th><th>Estado</th><th>Técnico</th><th></th></tr>
   {% for p in projectos %}
@@ -11,8 +12,12 @@
     <td>{{ p.get_estado_display }}</td>
     <td>{{ p.tecnico|default:"-" }}</td>
     <td>
-      <a href="{% url 'servicos:projecto_editar' p.pk %}">Editar</a>
-      <a href="{% url 'servicos:projecto_apagar' p.pk %}">Apagar</a>
+      {% if user|pode_gerir %}
+        <a href="{% url 'servicos:projecto_editar' p.pk %}">Editar</a>
+      {% endif %}
+      {% if user|pode_apagar %}
+        <a href="{% url 'servicos:projecto_apagar' p.pk %}">Apagar</a>
+      {% endif %}
     </td>
   </tr>
   {% empty %}

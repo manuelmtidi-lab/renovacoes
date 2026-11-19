@@ -1,7 +1,14 @@
 {% extends 'base.html' %}
+{% load perfis %}
 {% block conteudo %}
 <h1>{{ projecto.nome }}</h1>
-<p>Cliente: <a href="{% url 'servicos:cliente_detalhe' projecto.cliente.pk %}">{{ projecto.cliente.nome }}</a></p>
+<p>Cliente:
+  {% if user|pode_gerir %}
+    <a href="{% url 'servicos:cliente_detalhe' projecto.cliente.pk %}">{{ projecto.cliente.nome }}</a>
+  {% else %}
+    {{ projecto.cliente.nome }}
+  {% endif %}
+</p>
 <p>Estado: {{ projecto.get_estado_display }} | Técnico: {{ projecto.tecnico|default:"-" }}</p>
 {% if projecto.url %}<p><a href="{{ projecto.url }}">{{ projecto.url }}</a></p>{% endif %}
 
