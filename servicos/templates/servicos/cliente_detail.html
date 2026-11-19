@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+<h1>{{ cliente.nome }}</h1>
+<p>Email: {{ cliente.email|default:"-" }} | Telefone: {{ cliente.telefone|default:"-" }}</p>
+{% if cliente.notas %}<p>{{ cliente.notas }}</p>{% endif %}
+
+<h2>Projectos e serviços</h2>
+{% for p in cliente.projectos.all %}
+  <h3><a href="{% url 'servicos:projecto_detalhe' p.pk %}">{{ p.nome }}</a></h3>
+  <ul>
+    {% for s in p.servicos.all %}
+      <li>
+        <a href="{% url 'servicos:servico_detalhe' s.pk %}">{{ s.get_tipo_display }}</a>
+        - expira em {{ s.expira_em|date:"d/m/Y" }}
+        ({{ s.dias_para_expirar }} dias, {{ s.estado_alerta }})
+      </li>
+    {% empty %}
+      <li>Sem serviços.</li>
+    {% endfor %}
+  </ul>
+{% empty %}
+  <p>Sem projectos.</p>
+{% endfor %}
+{% endblock %}

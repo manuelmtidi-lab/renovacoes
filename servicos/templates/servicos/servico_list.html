@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+<h1>Serviços</h1>
+<a href="{% url 'servicos:servico_criar' %}">Novo serviço</a>
+<table border="1" cellpadding="4">
+  <tr>
+    <th>Cliente</th><th>Projecto</th><th>Tipo</th><th>Expira em</th>
+    <th>Dias</th><th>Estado</th><th>Margem</th><th></th>
+  </tr>
+  {% for s in servicos %}
+  <tr>
+    <td>{{ s.projecto.cliente.nome }}</td>
+    <td>{{ s.projecto.nome }}</td>
+    <td><a href="{% url 'servicos:servico_detalhe' s.pk %}">{{ s.get_tipo_display }}</a></td>
+    <td>{{ s.expira_em|date:"d/m/Y" }}</td>
+    <td>{{ s.dias_para_expirar }}</td>
+    <td>{{ s.estado_alerta }}</td>
+    <td>{{ s.margem }}</td>
+    <td>
+      <a href="{% url 'servicos:servico_editar' s.pk %}">Editar</a>
+      <a href="{% url 'servicos:servico_apagar' s.pk %}">Apagar</a>
+    </td>
+  </tr>
+  {% empty %}
+  <tr><td colspan="8">Sem serviços.</td></tr>
+  {% endfor %}
+</table>
+{% endblock %}

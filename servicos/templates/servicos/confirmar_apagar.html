@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+<h1>Apagar</h1>
+<p>Tens a certeza que queres apagar <strong>{{ object }}</strong>?</p>
+<form method="post">
+  {% csrf_token %}
+  <button type="submit">Sim, apagar</button>
+  <a href="javascript:history.back()">Cancelar</a>
+</form>
+{% endblock %}

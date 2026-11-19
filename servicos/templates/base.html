@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block titulo %}Renovações{% endblock %}</title>
+</head>
+<body>
+  <nav>
+    <a href="{% url 'servicos:servico_lista' %}">Serviços</a> |
+    <a href="{% url 'servicos:projecto_lista' %}">Projectos</a> |
+    <a href="{% url 'servicos:cliente_lista' %}">Clientes</a> |
+    <a href="{% url 'admin:index' %}">Admin</a>
+  </nav>
+  <hr>
+  {% if messages %}
+    <ul>{% for m in messages %}<li>{{ m }}</li>{% endfor %}</ul>
+  {% endif %}
+  {% block conteudo %}{% endblock %}
+</body>
+</html>

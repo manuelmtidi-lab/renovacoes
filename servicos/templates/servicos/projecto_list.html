@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+<h1>Projectos</h1>
+<a href="{% url 'servicos:projecto_criar' %}">Novo projecto</a>
+<table border="1" cellpadding="4">
+  <tr><th>Projecto</th><th>Cliente</th><th>Estado</th><th>Técnico</th><th></th></tr>
+  {% for p in projectos %}
+  <tr>
+    <td><a href="{% url 'servicos:projecto_detalhe' p.pk %}">{{ p.nome }}</a></td>
+    <td>{{ p.cliente.nome }}</td>
+    <td>{{ p.get_estado_display }}</td>
+    <td>{{ p.tecnico|default:"-" }}</td>
+    <td>
+      <a href="{% url 'servicos:projecto_editar' p.pk %}">Editar</a>
+      <a href="{% url 'servicos:projecto_apagar' p.pk %}">Apagar</a>
+    </td>
+  </tr>
+  {% empty %}
+  <tr><td colspan="5">Sem projectos.</td></tr>
+  {% endfor %}
+</table>
+{% endblock %}
