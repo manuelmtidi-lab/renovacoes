@@ -24,7 +24,6 @@ GROUP BY mes
 ORDER BY mes;
 
 -- 4. Margem por tipo de serviço
--- (esta é a tua)
 SELECT tipo, SUM(preco_venda - custo) AS margem
 FROM servicos
 GROUP BY tipo
